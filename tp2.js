@@ -1,18 +1,37 @@
 let books = [
-    { id: 1, titre:"Clean Code", auteur:"R.Martin", prix: 250, stock:12 },
-    { id: 2, titre:"You Don’t Know JS", auteur:"Kyle Simpson", prix: 180, stock:5 },
-    { id: 3, titre:"Eloquent JS", auteur:"Marijn Haverbeke", prix: 200, stock:8 }
+    { id: 1, titre: "Clean Code", auteur: "R.Martin", prix: 250, stock: 12 },
+    { id: 2, titre: "You Dont Know JS", auteur: "Kyle Simpson", prix: 180, stock: 5 },
+    { id: 3, titre: "Eloquent JS", auteur: "Marijn Haverbeke", prix: 200, stock: 0 }
 ];
 
-function calculTotal() {
-    let totale = 0;
-    for (let i = 0; i < books.length; i++) {
-        totale += books[i].prix * books[i].stock;
-    }
-    return totale;
+
+let maxId = books.length + 1;
+
+
+function addBook(titre, auteur, prix, stock) {
+    let book = {
+        id: maxId++,
+        titre,
+        auteur,
+        prix,
+        stock
+    };
+    books.push(book);
+    console.log(`Livre "${titre}" ajouté !`);
 }
 
-function updatestock(id, newStock) {
+
+function getBooksByAuthor(auteur) {
+    return books.filter(b => b.auteur === auteur);
+}
+
+
+function valeurStock() {
+    return books.reduce((total, b) => total + b.prix * b.stock, 0);
+}
+
+
+function updateStock(id, newStock) {
     let book = books.find(b => b.id === id);
     if (book) {
         book.stock = newStock;
@@ -22,10 +41,19 @@ function updatestock(id, newStock) {
     }
 }
 
+
 function sortByPrice() {
     return books.sort((a, b) => a.prix - b.prix);
 }
 
-console.log("Total valeur du stock:", calculTotal());
-updatestock(2, 10);
-console.log(sortByPrice());
+
+addBook("JavaScript: The Good Parts", "Douglas Crockford", 220, 6);
+
+console.log("Livres de Kyle Simpson :", getBooksByAuthor("Kyle Simpson"));
+
+console.log("Valeur totale du stock :", valeurStock());
+
+updateStock(2, 10);
+
+console.log("Livres triés par prix :", sortByPrice());
+git
